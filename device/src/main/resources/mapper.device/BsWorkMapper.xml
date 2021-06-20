@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wit.iot.device.mapper.BsWorkDao">
+
+	<resultMap id="BaseResultMap" type="com.wit.iot.device.domain.BsWork">
+		<id column="id" property="id" />
+		<id column="userid" property="userid" />
+		<id column="work_date" property="workDate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, userid, work_date
+	</sql>
+	
+</mapper>

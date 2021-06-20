@@ -1,0 +1,59 @@
+server:
+  port: 8088
+app:
+  id: iot-third-server
+
+spring:
+  application:
+    name: iot-third-server
+  redis:
+    host: ${redis.host:127.0.0.1}
+    port: ${redis.port:6379}
+    password: ${redis.password:}
+    # password: ynZRGM+sqUnT7qngFFZtazIwMTkAAAAAAAAAAAAAAAA=
+    timeout: ${redis.timeout:10000}
+    database: 0
+    jedis:
+      pool:
+        max-active: ${redis.max-active:8}
+        max-wait:  ${redis.max-wait:-1}
+        max-idle: ${redis.max-idle:8}
+        min-idle: ${redis.min-idle:0}
+    smartcall:
+      database: ${redis.device.database:8}
+  #数据库连接配置
+  datasource:
+    dynamic:
+      device:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3307/wittest?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: root
+        #password: e52HqJab83uPEBxy2Gl56g==
+      kettle:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://127.0.0.1:3307/kettle-rep?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: root
+
+  autoconfigure:
+    exclude:  com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure # 去除druid配置
+
+mybatis:
+  #type-aliases-package: com.zhexinit.aicc.third.model
+  configuration:
+    #全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存
+    cache-enabled: true
+    mapUnderscoreToCamelCase: true
+    #打印myBatis的sql
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#nfs主目录
+nfs.robot.audio: ${aicc.glusterFS.robot.audio:/mnt/glusterFS/robot-audio}
+
+#文件读写类型：OSS/NFS
+file.rw.type: ${storage.type:OSS}
+
+#读取配置文件
+###############i18n#############################
+il8n.language: en_US
