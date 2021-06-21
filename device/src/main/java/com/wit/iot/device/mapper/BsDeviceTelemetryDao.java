@@ -8,7 +8,10 @@ package com.wit.iot.device.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wit.iot.device.domain.BsDeviceTelemetry;
+import com.wit.iot.device.domain.vo.DeviceTelemetryVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**   
  * @Description:TODO(API应用KEY数据访问层)
@@ -19,5 +22,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface BsDeviceTelemetryDao extends BaseMapper<BsDeviceTelemetry> {
-	
+
+    /**
+     * 增量查询接口
+     */
+    List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo);
 }

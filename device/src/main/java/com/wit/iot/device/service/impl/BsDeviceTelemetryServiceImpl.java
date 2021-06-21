@@ -7,10 +7,15 @@
 package com.wit.iot.device.service.impl;
 
 import com.wit.iot.device.domain.BsDeviceTelemetry;
+import com.wit.iot.device.domain.vo.DeviceTelemetryVO;
 import com.wit.iot.device.mapper.BsDeviceTelemetryDao;
 import com.wit.iot.device.service.BsDeviceTelemetryService;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**   
  * @Description:TODO(API应用KEY服务实现)
@@ -21,5 +26,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
  */
 @Service
 public class BsDeviceTelemetryServiceImpl extends ServiceImpl<BsDeviceTelemetryDao, BsDeviceTelemetry> implements BsDeviceTelemetryService{
-	
+
+    @Resource
+    BsDeviceTelemetryDao deviceTelemetryDao;
+
+    @Override
+    public List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo) {
+        return deviceTelemetryDao.selectDeviceList(vo);
+    }
 }
