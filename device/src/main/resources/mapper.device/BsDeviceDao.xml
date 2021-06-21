@@ -4,7 +4,7 @@
 
 	<resultMap id="BaseResultMap" type="com.wit.iot.device.domain.BsDevice">
 		<id column="id" property="id" />
-		<id column="name" property="name" />
+		<result column="name" property="name" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id, name

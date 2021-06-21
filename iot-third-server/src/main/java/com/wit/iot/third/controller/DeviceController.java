@@ -6,10 +6,7 @@ import com.wit.iot.device.domain.vo.DeviceTelemetryVO;
 import com.wit.iot.device.service.BsDeviceTelemetryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class DeviceController {
     private BsDeviceTelemetryService deviceTelemetryService;
 
     @GetMapping("/data")
-    public AjaxResult getIncrementDate(DeviceTelemetryVO vo){
+    public AjaxResult getIncrementDate(@RequestBody DeviceTelemetryVO vo){
         Integer offset = vo.getOffset();
         if(null != offset && offset.equals(1)){
             vo.setOffset(0);

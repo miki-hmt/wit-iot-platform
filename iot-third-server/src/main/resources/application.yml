@@ -40,16 +40,13 @@ spring:
     exclude:  com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure # 去除druid配置
 
 mybatis:
-  #type-aliases-package: com.zhexinit.aicc.third.model
+  type-aliases-package: com.wit.iot.device.domain
   configuration:
     #全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存
     cache-enabled: true
     mapUnderscoreToCamelCase: true
     #打印myBatis的sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-mybatis-plus:
-  mapper-locations: classpath*:mapper/device/*.xml
 
 #nfs主目录
 nfs.robot.audio: ${aicc.glusterFS.robot.audio:/mnt/glusterFS/robot-audio}

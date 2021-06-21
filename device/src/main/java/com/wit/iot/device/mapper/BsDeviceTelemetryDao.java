@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wit.iot.device.domain.BsDeviceTelemetry;
 import com.wit.iot.device.domain.vo.DeviceTelemetryVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -26,5 +27,6 @@ public interface BsDeviceTelemetryDao extends BaseMapper<BsDeviceTelemetry> {
     /**
      * 增量查询接口
      */
+    @Select("select * from bs_device_telemetry limit #{offset}, #{dataSize}")
     List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo);
 }
