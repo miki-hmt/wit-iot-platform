@@ -8,7 +8,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>iot-third-server</artifactId>
     <description>
         第三方服务提供server
@@ -20,6 +19,7 @@
         <device.version>0.0.1-SNAPSHOT</device.version>
     </properties>
 
+
     <dependencies>
         <!-- swagger3-->
         <dependency>
@@ -29,11 +29,11 @@
         </dependency>
 
         <!-- 防止进入swagger页面报类型转换错误，排除3.0.0中的引用，手动增加1.6.2版本 -->
-        <dependency>
+        <!--<dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>${swagger-models.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!-- SpringBoot Web容器 -->
         <dependency>
@@ -50,7 +50,6 @@
         <dependency>
             <groupId>com.wit.iot</groupId>
             <artifactId>device</artifactId>
-            <version>${device.version}</version>
         </dependency>
 
     </dependencies>

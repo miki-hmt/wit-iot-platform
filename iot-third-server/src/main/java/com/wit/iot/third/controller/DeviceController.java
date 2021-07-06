@@ -18,9 +18,9 @@ public class DeviceController {
     private BsDeviceTelemetryService deviceTelemetryService;
 
     @GetMapping("/data")
-    public AjaxResult getIncrementDate(@RequestBody DeviceTelemetryVO vo){
+    public AjaxResult getIncrementDate(DeviceTelemetryVO vo){
         Integer offset = vo.getOffset();
-        if(null != offset && offset.equals(1)){
+        if(null == offset || offset.equals(1)){
             vo.setOffset(0);
         }
         if(ObjectUtils.isEmpty(vo.getDataSize())){

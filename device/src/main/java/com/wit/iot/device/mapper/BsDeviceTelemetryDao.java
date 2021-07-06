@@ -21,7 +21,6 @@ import java.util.List;
  * @author: miki
  * 
  */
-@Mapper
 public interface BsDeviceTelemetryDao extends BaseMapper<BsDeviceTelemetry> {
 
     /**

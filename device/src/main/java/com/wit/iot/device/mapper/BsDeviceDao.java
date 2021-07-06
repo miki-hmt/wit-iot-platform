@@ -17,7 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author: miki
  * 
  */
-@Mapper
 public interface BsDeviceDao extends BaseMapper<BsDevice> {
 	
 }

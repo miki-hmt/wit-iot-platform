@@ -10,6 +10,7 @@
         <module>iot-generator</module>
         <module>iot-third-server</module>
         <module>device</module>
+        <module>iot-hive-udf</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -17,7 +18,7 @@
     <description>维拓科技iot部门开发平台</description>
 
     <properties>
-        <wit-iot-platform.version>1.0.0</wit-iot-platform.version>
+        <wit-iot-platform.version>0.0.1-SNAPSHOT</wit-iot-platform.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -40,10 +41,19 @@
     </properties>
 
 
-    <!-- 依赖声明 -->
+    <!-- dependencyManagement 依赖声明 -->
+    <!--情景一: 在多工程项目中，我们常常是在为了方便依赖管理，我们在dependencies的外面加上一层dependencyManagement标签.
+        如何使用这个标签，那么我们在子工程里面如果要使用什么jar需要重新的引入一遍，
+        !!!!但是这个时候的引入不需要些引入的jar的版本号。
+
+        情形二: 如果我们不使用这个标签，那么父工程引入的jar我们可以在子工程的使用，父工程引入之后子工程需要引入jar
+        !!!!子工程不需要对父工程的jar再一次的引入:
+
+        总结: dependencyManagement这个是对依赖管理的一个标签，如果我们子工程有使用的jar，和父工程中的版本是不同的，
+        可以考虑使用这个标签。如果都是一样的jar那么，在父工程中就没有必要使用这个标签，这样在子工程中就不需要重新引入一遍jar
+    -->
     <dependencyManagement>
         <dependencies>
-
             <!-- SpringBoot的依赖配置-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -86,12 +96,6 @@
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${swagger.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>io.swagger</groupId>
-                        <artifactId>swagger-models</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <!-- io常用工具类 -->
@@ -154,6 +158,28 @@
                 <groupId>com.github.penggle</groupId>
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
+            </dependency>
+
+            <!--核心子模块版本管理   2021.06.22 miki-->
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>device</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>iot-common</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>iot-generator</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>iot-hive-udf</artifactId>
+                <version>${wit-iot-platform.version}</version>
             </dependency>
 
         </dependencies>

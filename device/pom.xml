@@ -8,29 +8,32 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>device</artifactId>
 
-    <dependencies>
+    <!-- 版本管理 单独配置在子模块中，防止不同模块对依赖版本要求不同  2021.06.20-->
+    <properties>
+        <mysql-connector-java.version>5.1.44</mysql-connector-java.version>
+        <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
+    </properties>
 
+    <dependencies>
         <!-- 通用工具-->
         <dependency>
             <groupId>com.wit.iot</groupId>
             <artifactId>iot-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.3.2</version>
+            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
 
         <!-- Mysql驱动包 单独配置在子模块中，防止不同数据源对驱动版本要求不同  2021.06.20-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.44</version>
+            <version>${mysql-connector-java.version}</version>
         </dependency>
     </dependencies>
 

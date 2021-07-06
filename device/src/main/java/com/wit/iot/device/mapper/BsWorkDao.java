@@ -17,7 +17,6 @@ import com.wit.iot.device.domain.BsWork;
  * @author: miki
  * 
  */
-@Mapper
 public interface BsWorkDao extends BaseMapper<BsWork> {
 	
 }

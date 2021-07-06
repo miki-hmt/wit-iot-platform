@@ -5,6 +5,7 @@ import com.wit.iot.device.domain.BsDevice;
 import com.wit.iot.device.domain.BsDeviceTelemetry;
 import com.wit.iot.device.service.BsDeviceService;
 import com.wit.iot.device.service.BsDeviceTelemetryService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class TestController {
     }
 
     @GetMapping("/{id}")
+    @Operation(tags = "测试")
     public void test(@PathVariable Integer id){
         deviceService.getById(id);
     }
