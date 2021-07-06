@@ -24,4 +24,6 @@ public interface BsDeviceTelemetryService extends IService<BsDeviceTelemetry> {
      * 增量查询接口
      */
     List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo);
+
+    List<BsDeviceTelemetry> getIncrementData(DeviceTelemetryVO vo);
 }

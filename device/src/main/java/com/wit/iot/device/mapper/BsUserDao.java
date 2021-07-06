@@ -17,6 +17,7 @@ import com.wit.iot.device.domain.BsUser;
  * @author: miki
  * 
  */
+@Mapper
 public interface BsUserDao extends BaseMapper<BsUser> {
 	
 }

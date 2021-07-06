@@ -13,4 +13,8 @@
 	<sql id="Base_Column_List">
 		id, device_id, good_count, bad_count, state, createtime
 	</sql>
+
+	<select id="getIncrementData" resultType="com.wit.iot.device.domain.BsDeviceTelemetry">
+		select * from bs_device_telemetry limit #{offset}, #{dataSize}
+	</select>
 </mapper>

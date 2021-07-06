@@ -34,4 +34,9 @@ public class BsDeviceTelemetryServiceImpl extends ServiceImpl<BsDeviceTelemetryD
     public List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo) {
         return deviceTelemetryDao.selectDeviceList(vo);
     }
+
+    @Override
+    public List<BsDeviceTelemetry> getIncrementData(DeviceTelemetryVO vo) {
+        return deviceTelemetryDao.getIncrementData(vo);
+    }
 }

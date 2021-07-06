@@ -3,13 +3,16 @@ package com.wit.iot.third.controller;
 import com.wit.iot.common.core.result.AjaxResult;
 import com.wit.iot.device.domain.BsDevice;
 import com.wit.iot.device.domain.BsDeviceTelemetry;
+import com.wit.iot.device.domain.vo.DeviceTelemetryVO;
 import com.wit.iot.device.service.BsDeviceService;
 import com.wit.iot.device.service.BsDeviceTelemetryService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName TestController
@@ -28,6 +31,19 @@ public class TestController {
     public TestController(BsDeviceService deviceService, BsDeviceTelemetryService telemetryService) {
         this.deviceService = deviceService;
         this.telemetryService = telemetryService;
+    }
+
+    @GetMapping("/data")
+    public AjaxResult getIncrementDate(DeviceTelemetryVO vo){
+        Integer offset = vo.getOffset();
+        if(null == offset || offset.equals(1)){
+            vo.setOffset(0);
+        }
+        if(ObjectUtils.isEmpty(vo.getDataSize())){
+            vo.setDataSize(100);
+        }
+        List<BsDeviceTelemetry> deviceTelemetries = telemetryService.getIncrementData(vo);
+        return AjaxResult.success(deviceTelemetries);
     }
 
     @GetMapping("/{id}")

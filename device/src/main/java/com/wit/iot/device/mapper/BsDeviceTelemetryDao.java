@@ -21,6 +21,7 @@ import java.util.List;
  * @author: miki
  * 
  */
+@Mapper
 public interface BsDeviceTelemetryDao extends BaseMapper<BsDeviceTelemetry> {
 
     /**
@@ -28,4 +29,6 @@ public interface BsDeviceTelemetryDao extends BaseMapper<BsDeviceTelemetry> {
      */
     @Select("select * from bs_device_telemetry limit #{offset}, #{dataSize}")
     List<BsDeviceTelemetry> selectDeviceList(DeviceTelemetryVO vo);
+
+    List<BsDeviceTelemetry> getIncrementData(DeviceTelemetryVO vo);
 }
