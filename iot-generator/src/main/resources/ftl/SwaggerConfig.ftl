@@ -29,7 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig {
 	
-	@Value("${swagger.enable}")
+	@Value("${swaggerAnnotation}")
     private Boolean swagger_enable;
 	
 	public static String CONTROLLER_URL="${controllerUrl}";    //Swagger扫描的接口路径

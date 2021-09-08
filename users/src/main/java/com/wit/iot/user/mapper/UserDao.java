@@ -1,0 +1,9 @@
+package com.wit.iot.user.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wit.iot.user.domain.User;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface UserDao extends BaseMapper<User> {
+}

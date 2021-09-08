@@ -8,31 +8,14 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>iot-generator</artifactId>
-    <description>
-        generator代码生成
-    </description>
 
+    <artifactId>store</artifactId>
     <!-- 版本管理 单独配置在子模块中，防止不同模块对依赖版本要求不同  2021.06.20-->
     <properties>
         <mysql-connector-java.version>5.1.44</mysql-connector-java.version>
         <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
     </properties>
-
     <dependencies>
-
-        <!--velocity代码生成使用模板 -->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
-
-        <!-- collections工具类 -->
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-        </dependency>
-
         <!-- 通用工具-->
         <dependency>
             <groupId>com.wit.iot</groupId>
@@ -40,9 +23,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
 
         <!-- Mysql驱动包 单独配置在子模块中，防止不同数据源对驱动版本要求不同  2021.06.20-->

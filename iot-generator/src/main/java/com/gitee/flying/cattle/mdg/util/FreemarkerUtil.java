@@ -38,7 +38,7 @@ public class FreemarkerUtil {
 			// 通过FreeMarker的Confuguration读取相应的模板文件
 	        Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
 	        // 设置模板路径
-	        configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/freemarker/ftl");
+	        configuration.setClassForTemplateLoading(FreemarkerUtil.class, "/ftl");
 	        // 设置默认字体
 	        configuration.setDefaultEncoding("utf-8");
 	        // 获取模板
