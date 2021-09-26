@@ -37,10 +37,24 @@ spring:
         password: root
       order:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://127.0.0.1:3306/foundation_order?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        url: jdbc:mysql://192.168.1.95:3306/foundation_order?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
         username: root
-        password: root
-
+        password: 123456
+      user:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.1.95:3306/foundation_user?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+      store:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.1.95:3306/foundation_store?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+      item:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.1.95:3306/foundation_item?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
   autoconfigure:
     exclude:  com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure # 去除druid配置
 
@@ -52,6 +66,12 @@ mybatis:
     mapUnderscoreToCamelCase: true
     #打印myBatis的sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+pagehelper:
+  # 指定使用的数据库数据库
+  helperDialect: mysql
+  # reasonable：分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询。
+  reasonable: true
 
 #nfs主目录
 nfs.robot.audio: ${aicc.glusterFS.robot.audio:/mnt/glusterFS/robot-audio}

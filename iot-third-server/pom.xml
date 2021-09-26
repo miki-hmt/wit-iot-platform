@@ -45,6 +45,30 @@
             <artifactId>device</artifactId>
         </dependency>
 
+        <!--测试订单系统  2021.09.08-->
+        <dependency>
+            <groupId>com.wit.iot</groupId>
+            <artifactId>order</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--测试单元 2021.09.08-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
 
     <build>

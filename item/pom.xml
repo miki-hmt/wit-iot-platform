@@ -9,33 +9,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>order</artifactId>
+    <artifactId>item</artifactId>
     <!-- 版本管理 单独配置在子模块中，防止不同模块对依赖版本要求不同  2021.06.20-->
     <properties>
         <mysql-connector-java.version>5.1.44</mysql-connector-java.version>
         <mybatis-plus-boot-starter.version>3.3.2</mybatis-plus-boot-starter.version>
-        <guava.version>19.0</guava.version>
     </properties>
-
     <dependencies>
         <!-- 通用工具-->
         <dependency>
             <groupId>com.wit.iot</groupId>
             <artifactId>iot-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.wit.iot</groupId>
-            <artifactId>users</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.wit.iot</groupId>
-            <artifactId>store</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.wit.iot</groupId>
-            <artifactId>item</artifactId>
         </dependency>
 
         <dependency>
@@ -49,13 +33,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
-        </dependency>
-
-        <!-- google guava  2021.09.08-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 

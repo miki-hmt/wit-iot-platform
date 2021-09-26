@@ -26,13 +26,13 @@ public class MyGenerator {
 		public static final String AUTHOR = "miki";
 		public static final String VERSION = "V1.0";
 		// 数据库连接信息：连接URL、用户名、秘密、数据库名
-		public static final String URL = "jdbc:mysql://127.0.0.1:3306/foundation_user?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8";
+		public static final String URL = "jdbc:mysql://127.0.0.1:3306/foundation_item?useSSL=false&serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8";
 		public static final String NAME = "root";
 		public static final String PASS = "root";
-		public static final String DATABASE = "foundation_user";
+		public static final String DATABASE = "foundation_item";
 		// 类信息：类名、对象名（一般是【类名】的首字母小些）、类说明、时间
 		public static final String CLASSNAME = "foreign";
-		public static final String TABLE = "user";
+		public static final String TABLE = "item";
 		public static final String CLASSCOMMENT = "API应用KEY";
 		public static final String TIME = "2021年09月08日";
 		public static final String AGILE = new Date().getTime() + "";

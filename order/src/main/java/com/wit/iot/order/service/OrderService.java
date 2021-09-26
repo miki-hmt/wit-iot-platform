@@ -4,4 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wit.iot.order.domain.Order;
 
 public interface OrderService extends IService<Order> {
+
+    Boolean handleOrderBatchInsert(Integer pageNo, Integer pageSize);
 }
