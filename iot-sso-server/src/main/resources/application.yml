@@ -1,0 +1,34 @@
+server:
+  port: 80
+app:
+  id: iot-sso-server
+
+spring:
+  application:
+    name: iot-sso-server
+  redis:
+    host: ${redis.host:127.0.0.1}
+    port: ${redis.port:6379}
+    password: ${redis.password:}
+    # password: ynZRGM+sqUnT7qngFFZtazIwMTkAAAAAAAAAAAAAAAA=
+    timeout: ${redis.timeout:10000}
+    database: 0
+    jedis:
+      pool:
+        max-active: ${redis.max-active:8}
+        max-wait:  ${redis.max-wait:-1}
+        max-idle: ${redis.max-idle:8}
+        min-idle: ${redis.min-idle:0}
+    smartcall:
+      database: ${redis.device.database:8}
+  #数据库连接配置
+
+#nfs主目录
+nfs.robot.audio: ${aicc.glusterFS.robot.audio:/mnt/glusterFS/robot-audio}
+
+#文件读写类型：OSS/NFS
+file.rw.type: ${storage.type:OSS}
+
+#读取配置文件
+###############i18n#############################
+il8n.language: en_US

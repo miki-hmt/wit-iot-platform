@@ -15,6 +15,9 @@
         <module>store</module>
         <module>users</module>
         <module>item</module>
+        <module>iot-sso-server</module>
+        <module>iot-mqtt</module>
+        <module>iot-gongli-server</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -203,6 +206,19 @@
             <dependency>
                 <groupId>com.wit.iot</groupId>
                 <artifactId>item</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>mqtt</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
+
+            <!--2021.11.04 miki 公立项目搭建-->
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>iot-gongli-server</artifactId>
                 <version>${wit-iot-platform.version}</version>
             </dependency>
 

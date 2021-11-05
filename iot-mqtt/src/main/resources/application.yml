@@ -1,0 +1,34 @@
+server:
+  port: 8081
+app:
+  id: iot-mqtt
+
+spring:
+  application:
+    name: iot-mqtt
+  data:
+    cassandra:
+      port: 9042
+      #数据库集群的IP数组
+      contact-points: 192.168.2.29
+      username: root
+      password: manager
+      #数据库的名称
+      keyspace-name: wittest
+
+# Mqtt配置
+mqtt:
+  #MQTT-服务器连接地址，如果有多个，用逗号隔开，如：tcp://192.168.2.135:1883，tcp://192.168.2.133:1883
+  serverURIs: tcp://192.168.2.29:1883
+  username: admin
+  password: public
+  #MQTT-默认的消息推送主题，实际可在调用接口时指定
+  topic: wittest
+  completion-timeout: 3000
+  #两个客户端的clientId不能相同，生产者和消费者的clientId不能相同
+  client:
+    id: ${random.value}
+
+#读取配置文件
+###############i18n#############################
+il8n.language: en_US
