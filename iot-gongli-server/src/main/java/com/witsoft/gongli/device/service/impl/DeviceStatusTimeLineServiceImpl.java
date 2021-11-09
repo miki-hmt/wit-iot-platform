@@ -220,13 +220,33 @@ public class DeviceStatusTimeLineServiceImpl extends ServiceImpl<DeviceStatusTim
     }
 
     /**
-     * @desc 取当日的运行时间总数（单位：秒）
+     * @desc 取当日的运行时长（单位：秒）
      * @param deviceId
      * @return
      */
     @Override
-    public Long getSumRunningTime(String deviceId) {
-        return deviceStatusTimeLineDao.getSumRunningTime(deviceId);
+    public Long getSumRunningTimeDay(String deviceId) {
+        //v2：优化查询运行总时间sql 2021.11.08
+        return deviceStatusTimeLineDao.getSumRunningTimeV2(deviceId);
+        //return deviceStatusTimeLineDao.getSumRunningTime(deviceId);
+    }
+
+    /**
+     * @desc 取当日的所有设备运行时长（单位：秒）
+     * @return
+     */
+    @Override
+    public Long getSumAllRunningTimeDay() {
+        return deviceStatusTimeLineDao.getSumAllRunningTimeV2();
+    }
+
+    /**
+     * @desc 取当日的所有设备开机时长（单位：秒）
+     * @return
+     */
+    @Override
+    public Long getSumAllOpeningTimeDay() {
+        return deviceStatusTimeLineDao.getSumAllOpeningTimeV2();
     }
 
     /**
@@ -236,7 +256,10 @@ public class DeviceStatusTimeLineServiceImpl extends ServiceImpl<DeviceStatusTim
      */
     @Override
     public Long getSumRunningTimeMonth(String deviceId) {
-        return deviceStatusTimeLineDao.getSumRunningTimeMonth(deviceId);
+        //v2 优化查询月度运行总时间的sql效率
+        return deviceStatusTimeLineDao.getSumRunningTimeMonthV2(deviceId);
+        //v1
+        //return deviceStatusTimeLineDao.getSumRunningTimeMonth(deviceId);
     }
 
     /**
@@ -256,6 +279,9 @@ public class DeviceStatusTimeLineServiceImpl extends ServiceImpl<DeviceStatusTim
      */
     @Override
     public Integer getSumTime(String deviceId) {
-        return deviceStatusTimeLineDao.getSumTime(deviceId);
+        //v2：优化查询运行总时间sql  2021.11.08
+        return deviceStatusTimeLineDao.getSumTimeV2(deviceId);
+        //v1:
+        //return deviceStatusTimeLineDao.getSumTime(deviceId);
     }
 }

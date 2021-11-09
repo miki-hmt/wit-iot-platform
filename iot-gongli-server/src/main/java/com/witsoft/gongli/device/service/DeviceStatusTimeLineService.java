@@ -29,7 +29,6 @@ public interface DeviceStatusTimeLineService extends IService<DeviceStatusTimeLi
     /**
      * @desc 获取当天的时序图设备列表
      * @param deviceId
-     * @param status
      * @return
      */
     List<DeviceStatusTimeLineEntity> getListByDeviceId(String deviceId);
@@ -42,11 +41,24 @@ public interface DeviceStatusTimeLineService extends IService<DeviceStatusTimeLi
     DeviceStatusTimeLineEntity getLastOneInfoByDeviceId(String deviceId);
 
     /**
-     * @desc 取当日的运行时间总数（单位：秒）
+     * @desc 取指定设备当日的运行时间总数（单位：秒）
      * @param deviceId
      * @return
      */
-    Long getSumRunningTime(String deviceId);
+    Long getSumRunningTimeDay(String deviceId);
+
+    /**
+     * @desc 取所有设备当日的运行时间总数（单位：秒）
+     * @return
+     */
+    Long getSumAllRunningTimeDay();
+
+
+    /**
+     * @desc 取所有设备当日的开机时间总数（单位：秒）
+     * @return
+     */
+    Long getSumAllOpeningTimeDay();
 
     /**
      * @desc 取上个月指定设备的的运行时间总数（单位：秒）

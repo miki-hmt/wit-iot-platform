@@ -19,4 +19,5 @@ public class DeviceQuota {
     private String grainMoveRate;
     //
     private String deviceName;
+    private String serialNumber;
 }

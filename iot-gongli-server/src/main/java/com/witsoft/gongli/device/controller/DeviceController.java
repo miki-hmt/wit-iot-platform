@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -70,29 +71,36 @@ public class DeviceController {
                 Double sumQuantity = 0.0, sumPerformance = 0.0, sumAvailability = 0.0, sumOee = 0.0;
 
                 for (DeviceEntity deviceEntity: allList) {
+                    //fixed（2021.11.08优先取数据库配置）：设备节拍
+                    Double deviceMeter = deviceEntity.getDeviceMeter();
+                    if(ObjectUtils.isEmpty(deviceMeter)){
+                        deviceMeter = setPerformance.doubleValue();
+                    }
                     DeviceQuota deviceQuota = new DeviceQuota();
                     Long totalCount = deviceEntity.getTotalCount();
                     Long goodCount = deviceEntity.getGoodCount();
 
+
                     //合格率(不保留小数)计算：合格数/总数量
                     deviceQuota.setQuantity("0");
                     Double quantityRate = 0.0;
-                    if(totalCount >= 0){
+                    if(totalCount > 0){
                         quantityRate = 1.0 *  goodCount / totalCount;
                         deviceQuota.setQuantity(decimalFormat.format(quantityRate * 100));
                     }
 
-                    //性能开动率计算：
+                    //性能开动率计算： 节拍/（运行总时长 / 总生产数）
                     //取当天的所有设备的运行时长（单位：秒）
-                    Long sumRunningTime = timeLineService.getSumRunningTime(deviceEntity.getId());
+                    Long sumRunningTime = timeLineService.getSumRunningTimeDay(deviceEntity.getId());
                     Double performanceRate = 0.0;
                     if(totalCount > 0 && sumRunningTime > 0){
-                        performanceRate = 1.0 * setPerformance / (sumRunningTime / totalCount);
+                        performanceRate = 1.0 * deviceMeter / (sumRunningTime / totalCount);
                     }
                     deviceQuota.setPerformance(decimalFormat.format(performanceRate * 100));
 
-                    //时间开动率：
-                    //取当天所有设备的运行时长（单位：秒）
+
+                    //时间开动率：当天运行总时长(秒)/总时长
+                    //取当天所有设备的总时长（运行+待机+停机 单位：秒）
                     Integer sumTime = timeLineService.getSumTime(deviceEntity.getId());
                     Double availability = 0.0;
                     deviceQuota.setAvailability("0");
@@ -113,6 +121,8 @@ public class DeviceController {
 
                     //扫尾工作：
                     deviceQuota.setDeviceName(deviceEntity.getName());
+                    deviceQuota.setSerialNumber(deviceEntity.getSerialNumber());
+
                     list.add(deviceQuota);
                 }
 
@@ -160,7 +170,7 @@ public class DeviceController {
 
             //性能开动率计算：
             //取当天的所有设备的运行时长（单位：秒）
-            Long sumRunningTime = timeLineService.getSumRunningTime(deviceEntity.getId());
+            Long sumRunningTime = timeLineService.getSumRunningTimeDay(deviceEntity.getId());
             Double performanceRate = 0.0;
             if(totalCount > 0 && sumRunningTime > 0){
                 performanceRate = 1.0 * setPerformance / (sumRunningTime / totalCount);
@@ -208,6 +218,8 @@ public class DeviceController {
     @GetMapping("/deviceTotalInfo")
     public Result deviceStatusPieChart(){
         Integer sum = 0;
+        Integer openSum = 0;
+
         DecimalFormat decimalFormat = new DecimalFormat("#");
         ArrayList<EchartVO> objects = new ArrayList<>();
         DeviceTotalInfo deviceTotalInfo = new DeviceTotalInfo(sum, objects);
@@ -221,9 +233,9 @@ public class DeviceController {
             if(instance == MachineStatusEnum.STOPPING){
                 echartVO.setName(instance.getAlias());
             }
-
+            //fixed（2121.11.08）:开机数量 = 运行数量 + 待机数量
             if(instance == MachineStatusEnum.RUNNING){
-                deviceTotalInfo.setRunningNum(deviceTotalInfo.getCount());
+                openSum = openSum + deviceTotalInfo.getCount();
             }
 
             if(instance == MachineStatusEnum.ERROR){
@@ -233,8 +245,21 @@ public class DeviceController {
         }
 
         deviceTotalInfo.setTotal(sum);
+        deviceTotalInfo.setRunningNum(openSum);
+
+        //v2：
+        //处理当日设备稼动率：= 所有设备当日运行时间 / 所有设备开机时间
+        deviceTotalInfo.setGrainMoveRate("0");
+        Long sumAllOpeningTimeDay = timeLineService.getSumAllOpeningTimeDay();
+        Long sumAllRunningTimeDay = timeLineService.getSumAllRunningTimeDay();
+        if(sumAllOpeningTimeDay > 0){
+            Double rate = 100 * 1.0 * sumAllRunningTimeDay / sumAllOpeningTimeDay;
+            deviceTotalInfo.setGrainMoveRate(decimalFormat.format(rate));
+        }
+
+        //v1：
         //处理设备稼动率：= 时间开动率 * 性能开动率 * 合格频率
-        Result averageDeviceTarget = getAverageDeviceTarget();
+        /*Result averageDeviceTarget = getAverageDeviceTarget();
         if(averageDeviceTarget.isSuccess()){
             DeviceQuotaListInfo data = (DeviceQuotaListInfo) averageDeviceTarget.getData();
             int performance = Integer.parseInt(data.getAllPerformance());
@@ -242,7 +267,7 @@ public class DeviceController {
             int quantity = Integer.parseInt(data.getAllQuantity());
             //都是乘以100后的整数，这里需要还原回去变成百分比
             deviceTotalInfo.setGrainMoveRate(String.valueOf(performance * availability * quantity /10000));
-        }
+        }*/
 
         //处理饼图
         objects.forEach(echartVO -> {

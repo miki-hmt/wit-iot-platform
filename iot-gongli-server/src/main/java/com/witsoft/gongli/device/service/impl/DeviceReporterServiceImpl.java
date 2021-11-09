@@ -29,7 +29,7 @@ public class DeviceReporterServiceImpl extends ServiceImpl<DeviceReporterDao, De
         Long allDevicesSumRunningMonth = reporterDao.getAllDevicesSumRunningMonth();
         Long allDevicesSumOpeningMonth = reporterDao.getAllDevicesSumOpeningMonth();
         List<String> xdatas = new ArrayList<>();
-        List<String> ydatas = new ArrayList<>();
+        List<String> ydatas = new ArrayList<>(12);
 
         List<RunAndOpenTimesAllMonth> andRunningMonthBefore = reporterDao.getAllDevicesSumOpeningAndRunningMonthBefore();
         for (RunAndOpenTimesAllMonth allMonth: andRunningMonthBefore) {
@@ -45,20 +45,28 @@ public class DeviceReporterServiceImpl extends ServiceImpl<DeviceReporterDao, De
                 continue;
             }
 
-            //正确计算当月之前的每一个月的指标
-            Double rate = 1.0 * openTimes / runningTimes * 100;
+            //正确计算当月之前的每一个月的指标(求整数，需要将百分数*100)
+            Double rate = 100 * 1.0 * openTimes / runningTimes;
             ydatas.add(df.format(rate));
         }
 
-        //定时任务每月一号执行统计上个月的报表任务（统计不到当月的），所以当前月份要另算
+        //定时任务每月一号执行统计上个月的报表任务（统计不到当月的），所以这里要单独统计当月的报表指标
         xdatas.add(DateUtil.sdf.format(new Date()));
         //计算当月指标
         if(allDevicesSumOpeningMonth <= 0){
             ydatas.add("0");
         }else{
-            Double rate = 1.0 * allDevicesSumRunningMonth / allDevicesSumOpeningMonth * 100;
+            Double rate = 100 * 1.0 * allDevicesSumRunningMonth / allDevicesSumOpeningMonth;
+            ydatas.add(df.format(rate));
         }
 
+        //fixed:(2021.11.08) 按12个月份，填充12个数据
+        if(ydatas.size() < 12){
+            int size = 12 - ydatas.size();
+            for (int i = 0; i < size; i++) {
+                ydatas.add("");
+            }
+        }
         Map<String, Object> data = new HashMap<>();
         data.put("x", xdatas);
         data.put("y", ydatas);

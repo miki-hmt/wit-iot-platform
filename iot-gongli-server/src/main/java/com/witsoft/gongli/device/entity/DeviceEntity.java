@@ -37,7 +37,7 @@ public class DeviceEntity {
     private String kpiCalaPeriod;
 
     @TableField("device_meter")
-    private String deviceMeter;
+    private Double deviceMeter;
 
     /**
      * @desc 计划开始时间
@@ -72,6 +72,7 @@ public class DeviceEntity {
     private Integer sort;
 
     @TableField("status")
+    //0:故障 1：正常 2：空闲 3：开机 4：停机
     private String status;
 
     @TableField("created_time")

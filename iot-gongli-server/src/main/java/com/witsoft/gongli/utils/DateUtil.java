@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class DateUtil {
     public final static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+    public final static SimpleDateFormat sdf_s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * @desc 求取两个时间段的差值，格式为秒
