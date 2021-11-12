@@ -7,6 +7,7 @@ public class EchartVO {
 
     private String name;
     private Integer value;
+    private String status;
 
     public EchartVO(String name, Integer value) {
         this.name = name;

@@ -16,7 +16,8 @@ public interface DeviceDao extends BaseMapper<DeviceEntity> {
     List<DeviceTotalInfo> getDeviceTotalInfo();
 
     @Select("select id, create_time, type, name, alias, location, model_number, serial_number, kpi_cala_period, device_meter," +
-            "plan_start_time, plan_end_time, coalesce(good_count,0), coalesce(bad_count,0), coalesce(total_count,0), ideal_run_rate, sort, status from device")
+            "plan_start_time, plan_end_time, coalesce(good_count,0), coalesce(bad_count,0), coalesce(total_count,0), " +
+            "ideal_run_rate, sort, status from device order by created_time desc")
     List<DeviceEntity> getAllList();
 
     @Select("select id, create_time, type, name, alias, location, model_number, serial_number, kpi_cala_period, device_meter," +

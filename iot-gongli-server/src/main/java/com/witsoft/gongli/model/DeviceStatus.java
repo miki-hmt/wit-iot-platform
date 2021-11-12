@@ -22,6 +22,20 @@ public class DeviceStatus {
     private String machinesOnline;
 
 
+    public Integer getGoodQuantity() {
+        if(goodQuantity == null){
+            return 0;
+        }
+        return goodQuantity;
+    }
+
+    public Integer getBadQuantity() {
+        if(badQuantity == null){
+            return 0;
+        }
+        return badQuantity;
+    }
+
     /**
      * @desc 统一状态码
      */
@@ -38,7 +52,20 @@ public class DeviceStatus {
             if(MachineStatusEnum.RUNNING.getValue().equals(running)){
                 return MachineStatusEnum.RUNNING;
             }
-            return MachineStatusEnum.ERROR;
+            return MachineStatusEnum.WAITING;
+        }
+
+        return null;
+    }
+
+
+    public MachineStatusEnum getRunningStatus(){
+        //!!设备开停机状态优先级高于运行状态，如果是关机状态，不处理running状态的数据
+        if(null != running){
+            if(MachineStatusEnum.RUNNING.getValue().equals(running)){
+                return MachineStatusEnum.RUNNING;
+            }
+            return MachineStatusEnum.WAITING;
         }
 
         return null;

@@ -80,4 +80,16 @@ public interface DeviceStatusTimeLineService extends IService<DeviceStatusTimeLi
      * @return
      */
     Integer getSumTime(String deviceId);
+
+    /**
+     * @desc 获取设备状态为Turning，且total_spent为null的设备
+     * @return
+     */
+    Long getSumAllOpeningTimeDayOfTotalSpentIsnull();
+
+    /**
+     * @desc 获取设备状态为Running，且total_spent为null的设备
+     * @return
+     */
+    Long getSumAllRunningTimeDayOfTotalSpentIsnull();
 }

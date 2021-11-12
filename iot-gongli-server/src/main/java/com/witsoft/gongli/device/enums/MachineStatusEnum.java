@@ -4,7 +4,7 @@ public enum MachineStatusEnum {
 
     ERROR(0, "故障", "1", ""),
     RUNNING(1, "正常", "1", ""),
-    WAITING(2, "空闲", "3", ""),
+    WAITING(2, "待机", "3", ""),
     TURNING(3, "开机", "0", ""),
     STOPPING(4, "停机", "0", "关机");
 

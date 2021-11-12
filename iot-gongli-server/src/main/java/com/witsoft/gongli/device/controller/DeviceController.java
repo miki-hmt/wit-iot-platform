@@ -230,11 +230,13 @@ public class DeviceController {
             MachineStatusEnum instance = MachineStatusEnum.getInstance(totalInfo.getStatus());
 
             EchartVO echartVO = new EchartVO(instance.getMsg(), totalInfo.getCount());
+            echartVO.setStatus(totalInfo.getStatus().toString());
+
             if(instance == MachineStatusEnum.STOPPING){
                 echartVO.setName(instance.getAlias());
             }
             //fixed（2121.11.08）:开机数量 = 运行数量 + 待机数量
-            if(instance == MachineStatusEnum.RUNNING){
+            if(instance == MachineStatusEnum.RUNNING || instance == MachineStatusEnum.WAITING){
                 openSum = openSum + deviceTotalInfo.getCount();
             }
 
@@ -252,6 +254,16 @@ public class DeviceController {
         deviceTotalInfo.setGrainMoveRate("0");
         Long sumAllOpeningTimeDay = timeLineService.getSumAllOpeningTimeDay();
         Long sumAllRunningTimeDay = timeLineService.getSumAllRunningTimeDay();
+
+        //fixed（2021.11.11）:获取当日连续运行和开机设备（没用标记total_spent值的记录）的时长
+        Long totalOpeningSpentIsnull = timeLineService.getSumAllOpeningTimeDayOfTotalSpentIsnull();
+        Long totalRunningSpentIsnull = timeLineService.getSumAllRunningTimeDayOfTotalSpentIsnull();
+        log.info("统计的连续运行的设备实时开机时间：{}，连续运行的设备实时运行时间：{}", totalOpeningSpentIsnull, totalRunningSpentIsnull);
+
+        //累加
+        sumAllOpeningTimeDay += totalOpeningSpentIsnull;
+        sumAllRunningTimeDay += totalRunningSpentIsnull;
+
         if(sumAllOpeningTimeDay > 0){
             Double rate = 100 * 1.0 * sumAllRunningTimeDay / sumAllOpeningTimeDay;
             deviceTotalInfo.setGrainMoveRate(decimalFormat.format(rate));
