@@ -1,0 +1,91 @@
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 10
+  servlet:
+    context-path: /api
+app:
+  id: /api
+
+gongli:
+  device:
+    setPerformance: 60
+  mes:
+    host: http://192.168.1.171:30000
+    performance-rate-api: /api/product/ReportBI/performanceRate
+    sign: 4028810a737a597c017370702b660069
+
+spring:
+  application:
+    name: api
+  # 消息队列
+  rabbitmq:
+    runMq: false
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    publisher-returns: true
+    virtual-host: /
+    template:
+      retry:
+        max-attempts: 3
+    #配置rabbitmq默认不启动
+    listener:
+      direct:
+        auto-startup: false
+      simple:
+        auto-startup: false
+  # 数据源配置
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    database-platform: "${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.PostgreSQLDialect}"
+  datasource:
+    driver-class-name: "${SPRING_DRIVER_CLASS_NAME:org.postgresql.Driver}"
+    url: jdbc:postgresql://127.0.0.1:5432/iot_sp
+    username: sinlaka
+    password: miki12345
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      #最小空闲链接数
+      minimumIdle: 5
+      #最大链接数
+      maximumPoolSize: 50
+      #最大生命周期
+      maxLifetime: 180000
+      #最长闲置时间
+      idleTimeout: 60000
+      #等待连接池的最大毫秒数
+      connectionTimeout: 20000
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.witsoft.**.entity
+  global-config:
+    db-config:
+      field-strategy: not-empty
+      db-type: postgresql
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+    auto-mapping-unknown-column-behavior: none
+    #默认不显示sql日志
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+#读取配置文件
+###############i18n#############################
+il8n:
+  language: en_US
+
+logging:
+  config: classpath:logback-spring.xml

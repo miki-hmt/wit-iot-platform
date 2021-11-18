@@ -58,94 +58,15 @@ public class DeviceController {
 
     @GetMapping("/getAverageDeviceTarget")
     @ApiOperation(value = "所有设备平均指标")
-    public Result getAverageDeviceTarget(){
-        DeviceQuotaListInfo deviceQuotaListInfo = new DeviceQuotaListInfo();
-        List<DeviceQuota> list = new ArrayList<>();
+    public Result<DeviceQuotaListInfo> getAverageDeviceTarget(){
 
         try{
-            //double型数字格式化小数点
-            DecimalFormat decimalFormat = new DecimalFormat("#");
-            List<DeviceEntity> allList = deviceService.getAllList();
-
-            if(!CollectionUtils.isEmpty(allList)){
-                Double sumQuantity = 0.0, sumPerformance = 0.0, sumAvailability = 0.0, sumOee = 0.0;
-
-                for (DeviceEntity deviceEntity: allList) {
-                    //fixed（2021.11.08优先取数据库配置）：设备节拍
-                    Double deviceMeter = deviceEntity.getDeviceMeter();
-                    if(ObjectUtils.isEmpty(deviceMeter)){
-                        deviceMeter = setPerformance.doubleValue();
-                    }
-                    DeviceQuota deviceQuota = new DeviceQuota();
-                    Long totalCount = deviceEntity.getTotalCount();
-                    Long goodCount = deviceEntity.getGoodCount();
-
-
-                    //合格率(不保留小数)计算：合格数/总数量
-                    deviceQuota.setQuantity("0");
-                    Double quantityRate = 0.0;
-                    if(totalCount > 0){
-                        quantityRate = 1.0 *  goodCount / totalCount;
-                        deviceQuota.setQuantity(decimalFormat.format(quantityRate * 100));
-                    }
-
-                    //性能开动率计算： 节拍/（运行总时长 / 总生产数）
-                    //取当天的所有设备的运行时长（单位：秒）
-                    Long sumRunningTime = timeLineService.getSumRunningTimeDay(deviceEntity.getId());
-                    Double performanceRate = 0.0;
-                    if(totalCount > 0 && sumRunningTime > 0){
-                        performanceRate = 1.0 * deviceMeter / (sumRunningTime / totalCount);
-                    }
-                    deviceQuota.setPerformance(decimalFormat.format(performanceRate * 100));
-
-
-                    //时间开动率：当天运行总时长(秒)/总时长
-                    //取当天所有设备的总时长（运行+待机+停机 单位：秒）
-                    Integer sumTime = timeLineService.getSumTime(deviceEntity.getId());
-                    Double availability = 0.0;
-                    deviceQuota.setAvailability("0");
-                    if(sumTime > 0){
-                        availability = 1.0 * sumRunningTime / sumTime;
-                        deviceQuota.setAvailability(decimalFormat.format(availability * 100));
-                    }
-
-                    //oee计算：
-                    Double oee = quantityRate * performanceRate * availability;
-                    deviceQuota.setOee(decimalFormat.format(oee * 100));
-
-                    //所有设备总的指标累计计算：
-                    sumQuantity += quantityRate;
-                    sumPerformance += performanceRate;
-                    sumAvailability += availability;
-                    sumOee += oee;
-
-                    //扫尾工作：
-                    deviceQuota.setDeviceName(deviceEntity.getName());
-                    deviceQuota.setSerialNumber(deviceEntity.getSerialNumber());
-
-                    list.add(deviceQuota);
-                }
-
-                //封装所有设备的指标
-                deviceQuotaListInfo.setAllQuantity( sumQuantity <= 0 ? "0" :
-                        decimalFormat.format(sumQuantity / allList.size() * 100));
-
-                deviceQuotaListInfo.setAllPerformance( sumPerformance <= 0 ? "0" :
-                        decimalFormat.format(sumPerformance / allList.size() * 100));
-
-                deviceQuotaListInfo.setAllAvailability( sumAvailability <= 0 ? "0" :
-                        decimalFormat.format(sumAvailability / allList.size() * 100));
-
-                deviceQuotaListInfo.setAllOee( sumOee <= 0 ? "0" :
-                        decimalFormat.format(sumOee / allList.size() * 100));
-
-                deviceQuotaListInfo.setList(list);
-            }
+            DeviceQuotaListInfo averageDeviceTarget = deviceService.getAverageDeviceTarget();
+            return Result.success(averageDeviceTarget);
         }catch (Exception e){
             log.error("获取设备平均指标异常：{}", e.getMessage());
             return Result.error(Status.ERROR);
         }
-        return Result.success(deviceQuotaListInfo);
     }
 
 
@@ -202,8 +123,7 @@ public class DeviceController {
     @ApiOperation(value = "thingsboard平台上报设备数据接口")
     @PostMapping("/reportStatus")
     public Result reportStatus(@RequestBody @Valid String obj){
-        log.info("设备运行状态变化，上传数据：{}", obj);
-
+        
         if(runMq){
             timeLineService.reportStatusSplitFlow(obj);
         }else {

@@ -18,6 +18,7 @@
         <module>iot-sso-server</module>
         <module>iot-mqtt</module>
         <module>iot-gongli-server</module>
+        <module>iot-weilai-server</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -221,7 +222,12 @@
                 <artifactId>iot-gongli-server</artifactId>
                 <version>${wit-iot-platform.version}</version>
             </dependency>
-
+            <!--2021.11.16 miki 杭州未来项目搭建-->
+            <dependency>
+                <groupId>com.wit.iot</groupId>
+                <artifactId>iot-weilai-server</artifactId>
+                <version>${wit-iot-platform.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

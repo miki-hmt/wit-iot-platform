@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.witsoft.weilai.dao.iot.StationRateDao">
+
+    <!-- 获取工位详情 -->
+    <select id="getStationInfo" resultType="com.witsoft.weilai.common.dto.StationRateDTO">
+        SELECT dsr.*, d.use_date, d.device_name, d.device_model, d.device_label, d.factory_number FROM
+            (SELECT sr.*,ds.device_id from station_rate sr LEFT JOIN device_station ds ON sr.station_id = ds.id WHERE sr.station_id = #{stationId}) dsr
+                LEFT JOIN device d ON dsr.device_id = d.device_id
+    </select>
+</mapper>

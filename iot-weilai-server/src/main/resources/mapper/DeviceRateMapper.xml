@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.witsoft.weilai.dao.iot.DeviceRateDao">
+
+    <!-- 获取设备统计信息列表 -->
+    <select id="list" resultType="com.witsoft.weilai.domain.iot.DeviceRate">
+        select dr.* from device_rate dr left join device d on dr.device_id = d.device_id
+    </select>
+
+    <!--<insert
+            id="saveUser" parameterType="com.test.springtest.User"
+            useGeneratedKeys="true">
+        insert into student(NAME,AGE) values (#{name},#{age})
+    </insert>-->
+</mapper>

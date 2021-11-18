@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.witsoft.weilai.dao.iot.DeviceDao">
+
+    <!-- 获取车间列表 -->
+    <!--<select id="getWorkshopList" resultType="com.witsoft.entity.iot.Workshop">
+        select workshop_id,workshop_name from workshop
+    </select>-->
+</mapper>

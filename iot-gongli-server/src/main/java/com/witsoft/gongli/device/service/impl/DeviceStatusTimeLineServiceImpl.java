@@ -61,6 +61,7 @@ public class DeviceStatusTimeLineServiceImpl extends ServiceImpl<DeviceStatusTim
                 return;
             }
 
+            log.info("设备运行状态变化，上传数据：{}", obj);
             String running = deviceStatus.getRunning();
             String machinesOnline = deviceStatus.getMachinesOnline();
             MachineStatusEnum status = deviceStatus.getStatus();
@@ -125,6 +126,10 @@ public class DeviceStatusTimeLineServiceImpl extends ServiceImpl<DeviceStatusTim
 
                 //1-3：设备运行事件，新增时序记录
                 if(MachineStatusEnum.RUNNING.getCodeStr().equals(running)){
+
+                    //fixed(2021.11.12)：重新初始化uuid
+                    timeLineEntity.setId(UUID.randomUUID().toString());
+
                     timeLineEntity.setStatus(MachineStatusEnum.RUNNING.getCodeStr());
                     timeLineEntity.setEventTime(deviceStatus.getCreateDate());
 

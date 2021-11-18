@@ -84,6 +84,18 @@ public class DeviceReporterController {
         return Result.success(monthGrainMoveRate);
     }
 
+
+    /**
+     * @desc 所有设备的月度性能稼动率
+     * @return
+     */
+    @ApiOperation(value = "性能稼动率折线图")
+    @GetMapping("/month/performanceGrainMoveRate")
+    public Result getMonthReporterPerformanceGrainMoveRate(){
+        Map<String, Object> monthGrainMoveRate = reporterService.getAllDeviceMonthPerformanceGrainMoveRate();
+        return Result.success(monthGrainMoveRate);
+    }
+
     @PostMapping("/save")
     public Result saveReporter(){
         Long sumOpeningTimeMonth = deviceStatusTimeLineService.getSumOpeningTimeMonth("4");

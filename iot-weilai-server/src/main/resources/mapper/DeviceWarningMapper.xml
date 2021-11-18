@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.witsoft.weilai.dao.iot.DeviceWarningDao">
+
+    <!-- 获取告警列表 -->
+    <select id="getAllList" resultType="com.witsoft.weilai.common.dto.DeviceWarningDTO">
+        select dw.*,d.device_name from device_warn dw LEFT JOIN device d ON dw.device_id = d.device_id and dw.status = 0
+    </select>
+</mapper>

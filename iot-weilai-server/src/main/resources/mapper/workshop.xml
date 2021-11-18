@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.witsoft.weilai.dao.iot.WorkshopDao">
+
+    <!-- 获取车间列表 -->
+    <select id="getWorkshopList" resultType="com.witsoft.weilai.domain.iot.Workshop">
+        select workshop_id,workshop_name from workshop
+    </select>
+
+
+    <select id="getWSDeviceInfo" resultType="com.witsoft.weilai.common.dto.WSDeviceInfoDTO">
+        select count(device_state) AS deviceCount, device_state FROM device WHERE workshop_id = #{workshopId} GROUP BY device_state
+    </select>
+    <!--<insert
+            id="saveUser" parameterType="com.test.springtest.User"
+            useGeneratedKeys="true">
+        insert into student(NAME,AGE) values (#{name},#{age})
+    </insert>-->
+</mapper>

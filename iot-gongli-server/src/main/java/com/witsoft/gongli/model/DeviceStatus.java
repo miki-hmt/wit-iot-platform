@@ -68,6 +68,7 @@ public class DeviceStatus {
             return MachineStatusEnum.WAITING;
         }
 
-        return null;
+        //fixed(2021.11.12)：没用待机，运行事件。默认走开机，关机判断
+        return getStatus();
     }
 }
